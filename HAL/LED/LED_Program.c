@@ -1,6 +1,6 @@
 /*
  *  file Name : LED_Program.c
- *  Created on: þ8/5þ/2026 at 10:44 ã
+ *  Created on: Ã¾8/5Ã¾/2026 at 10:44 Ã£
  *  Author    : Ziad_Elmeakwy
  *  Description : 
  */
@@ -31,16 +31,7 @@ void LED_voidInit( LED_Type LED_Configuration )
 */
 void LED_voidOn  ( LED_Type LED_Configuration )
 {
-
-	if( LED_Configuration.Active_State == ACTIVE_HIGH ){
-
 		DIO_enumSetPinValue( LED_Configuration.Port , LED_Configuration.Pin , DIO_PIN_HIGH );
-
-	}else if( LED_Configuration.Active_State == ACTIVE_LOW ){
-
-		DIO_enumSetPinValue( LED_Configuration.Port , LED_Configuration.Pin , DIO_PIN_LOW  );
-
-	}
 
 }
 
@@ -53,16 +44,7 @@ void LED_voidOn  ( LED_Type LED_Configuration )
 */
 void LED_voidOff ( LED_Type LED_Configuration )
 {
-
-	if( LED_Configuration.Active_State == ACTIVE_HIGH ){
-
 		DIO_enumSetPinValue( LED_Configuration.Port , LED_Configuration.Pin , DIO_PIN_LOW  );
-
-	}else if( LED_Configuration.Active_State == ACTIVE_LOW ){
-
-		DIO_enumSetPinValue( LED_Configuration.Port , LED_Configuration.Pin , DIO_PIN_HIGH  );
-
-	}
 
 }
 
