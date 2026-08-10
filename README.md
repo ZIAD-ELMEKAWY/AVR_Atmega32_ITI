@@ -265,14 +265,12 @@ int main()
 <div align="center">
 
 ### 💡 LED Blinking Demo
-<img src="Hardware_Connection/LED_Simulation.PNG" width="500" alt="LED Simulation"/>
+<img src="Hardware_Connection/LED_Demo.gif" width="500" alt="LED Simulation"/>
 
-*Replace with `LED_Demo.gif` for animated playback*
 
 ### 7️⃣ Seven-Segment Counting Demo
-<img src="Hardware_Connection/7_Segment_Simulation.PNG" width="500" alt="7-Segment Simulation"/>
+<img src="Hardware_Connection/7Segment_Demo.gif" width="500" alt="7-Segment Simulation"/>
 
-*Replace with `7Segment_Demo.gif` for animated playback*
 
 </div>
 
