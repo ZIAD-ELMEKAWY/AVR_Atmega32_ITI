@@ -1,3 +1,5 @@
+<div align="center">
+
 # ⚡ ATmega32 AVR Drivers – ITI Embedded Systems
 
 [![Microchip AVR](https://img.shields.io/badge/Microcontroller-ATmega32-blue.svg)](https://www.microchip.com/en-us/product/ATmega32)
@@ -8,65 +10,24 @@
 A fully modular, production-grade **C driver suite** for the **8-bit AVR ATmega32 microcontroller**.  
 Built following standard **Layered Embedded Software Architecture** principles taught during the **ITI (Information Technology Institute)** Embedded Systems track.
 
+</div>
+
 ---
 
 ## 📐 Layered Software Architecture
 
-This repository separates low-level hardware registers from high-level application logic using a **4-tier design model**:
+<div align="center">
+  <img src="architecture_animation.svg" width="600" alt="Layered Architecture Animation"/>
+</div>
 
-```
-┌─────────────────────────────────────────┐
-│           APP (Application)             │
-│     main.c · System Integration         │
-├─────────────────────────────────────────┤
-│      HAL (Hardware Abstraction)         │
-│   LED · SSD · LCD · KEYPAD · MOTOR      │
-├─────────────────────────────────────────┤
-│   MCAL (Microcontroller Abstraction)    │
-│   DIO · EXTI · GIE · ADC · TIMER · ...  │
-├─────────────────────────────────────────┤
-│       LIB (Libraries / Common)          │
-│   STD_Types · BIT_Math                  │
-└─────────────────────────────────────────┘
-```
+<br>
 
-### 1. LIB (Software Libraries)
-Contains utility headers for standard data types and bit manipulations:
-
-| File | Description |
-|------|-------------|
-| `STD_Types.h` | Standard integer type definitions (`u8`, `u16`, `u32`, `s8`, `s16`, `s32`, `f32`, `f64`, `bool`). |
-| `BIT_Math.h` | Bitwise operation macros (`SET_BIT`, `CLR_BIT`, `TOG_BIT`, `GET_BIT`, `IS_BIT_SET`, `IS_BIT_CLR`). |
-
-### 2. MCAL (Microcontroller Abstraction Layer)
-Directly interacts with internal ATmega32 hardware peripherals:
-
-| Module | Description |
-|--------|-------------|
-| **DIO** (GPIO) | Pin & Port direction setting, reading, and writing. |
-| **EXTI** | External Interrupts (`INT0`, `INT1`, `INT2`) with configurable trigger modes. |
-| **GIE** | Global Interrupt Enable control (SREG bit 7). |
-| **ADC** | Analog-to-Digital Converter with single/chain conversion, polling, and interrupt capability. |
-| **TIMER0 / TIMER1 / TIMER2** | Timers/Counters in Normal, CTC, Fast PWM, and Phase Correct PWM modes, plus Input Capture Unit (ICU). |
-| **USART** | Serial asynchronous communication (TX/RX, polling, interrupts). |
-| **SPI** | Serial Peripheral Interface (Master/Slave modes). |
-| **TWI** (I²C) | Two-Wire Interface with master/slave transmitter and receiver modes. |
-| **WDT** | Watchdog Timer control. |
-
-### 3. HAL (Hardware Abstraction Layer)
-Provides high-level APIs for external components connected to the microcontroller:
-
-| Module | Description |
-|--------|-------------|
-| **LED** | LED initialization, ON/OFF, and toggle control. |
-| **SSD** | Seven Segment Display driver (Common Anode & Common Cathode). |
-| **LCD** | Character LCD (4-bit / 8-bit mode) driver for 16×2 / 20×4 screens. |
-| **KEYPAD** | 4×4 matrix keypad scanner. |
-| **SWITCH** | Abstraction driver for simple digital input peripherals. |
-| **DC_MOTOR / STEPPER_MOTOR** | Motor direction and speed control interfacing via drivers like L293D / ULN2003. |
-
-### 4. APP (Application Layer)
-Contains `main.c` and system integration logic, utilizing HAL and MCAL services to execute target tasks.
+| Layer | Components | Purpose |
+|:-----:|:-----------|:--------|
+| **APP** | `main.c` · System Integration | High-level application logic |
+| **HAL** | LED · SSD · LCD · KEYPAD · MOTOR | External hardware abstraction |
+| **MCAL** | DIO · EXTI · GIE · ADC · TIMER · USART · SPI · TWI · WDT | Internal peripheral control |
+| **LIB** | STD_Types · BIT_Math | Common utilities & type definitions |
 
 ---
 
@@ -74,32 +35,37 @@ Contains `main.c` and system integration logic, utilizing HAL and MCAL services 
 
 ```
 AVR_Atmega32_ITI/
-├── APP/
-│   ├── DIO_test.c              # DIO driver test application
-│   └── Seven_Segment.c         # Seven-Segment test application
-├── HAL/
-│   ├── LED/
+├── 📂 APP/
+│   ├── DIO_test.c              # 🔌 DIO driver test application
+│   └── Seven_Segment.c         # 7️⃣ Seven-Segment test application
+│
+├── 📂 HAL/
+│   ├── 📂 LED/
 │   │   ├── LED_Config.h
-│   │   ├── LED_Interface.h
+│   │   ├── LED_Interface.h     # 💡 Public LED API
 │   │   ├── LED_Private.h
 │   │   └── LED_Program.c
-│   └── SSD/
+│   └── 📂 SSD/
 │       ├── SSD_Config.h
-│       ├── SSD_Interface.h
+│       ├── SSD_Interface.h     # 7️⃣ Public SSD API
 │       ├── SSD_Private.h
 │       └── SSD_Program.c
-├── MCAL/
-│   └── DIO/
+│
+├── 📂 MCAL/
+│   └── 📂 DIO/
 │       ├── DIO_Config.h
-│       ├── DIO_Interface.h
+│       ├── DIO_Interface.h     # 🔌 Public DIO API
 │       ├── DIO_Private.h
 │       └── DIO_Program.c
-├── LIB/
-│   ├── STD_Types.h
-│   └── BIT_Math.h
-├── Hardware_Connection/
-│   ├── LED_Simulation.PNG
-│   └── 7_Segment_Simulation.PNG
+│
+├── 📂 LIB/
+│   ├── STD_Types.h             # 📋 Standard type definitions
+│   └── BIT_Math.h              # 🔧 Bit manipulation macros
+│
+├── 📂 Hardware_Connection/
+│   ├── LED_Simulation.PNG      # 🖼️ LED Proteus schematic
+│   └── 7_Segment_Simulation.PNG # 🖼️ 7-Segment Proteus schematic
+│
 ├── .gitignore
 ├── LICENSE
 └── README.md
@@ -124,7 +90,7 @@ Each module inside **MCAL** and **HAL** strictly follows the **4-file structure 
 
 The **DIO** driver provides complete control over the ATmega32 GPIO pins and ports.
 
-### Supported Operations
+### 📌 Supported Operations
 
 | Function | Description |
 |----------|-------------|
@@ -137,7 +103,7 @@ The **DIO** driver provides complete control over the ATmega32 GPIO pins and por
 | `DIO_enumGetPortValue(port, *data)` | Read the current 8-bit value of a port. |
 | `DIO_enumTogglePortValue(port)` | Toggle all bits of an entire port. |
 
-### Constants
+### 📌 Constants
 
 ```c
 // Ports
@@ -155,7 +121,7 @@ DIO_PIN_LOW, DIO_PIN_HIGH
 DIO_PORT_LOW, DIO_PORT_HIGH
 ```
 
-### Example Usage
+### 💻 Example Usage
 
 ```c
 #include "MCAL/DIO/DIO_Interface.h"
@@ -194,7 +160,7 @@ int main()
 
 High-level abstraction over the DIO driver for controlling LEDs.
 
-### LED Configuration Structure
+### 📌 LED Configuration Structure
 
 ```c
 typedef struct {
@@ -204,7 +170,7 @@ typedef struct {
 } LED_Type;
 ```
 
-### API
+### 📌 API
 
 | Function | Description |
 |----------|-------------|
@@ -213,7 +179,7 @@ typedef struct {
 | `LED_voidOff(LED_Type config)` | Turn the LED OFF. |
 | `LED_voidToggle(LED_Type config)` | Toggle the LED state. |
 
-### Example
+### 💻 Example
 
 ```c
 #include "HAL/LED/LED_Interface.h"
@@ -227,8 +193,9 @@ int main()
     while (1)
     {
         LED_voidOn(myLed);
-        // delay …
+        _delay_ms(500);
         LED_voidOff(myLed);
+        _delay_ms(500);
     }
     return 0;
 }
@@ -240,7 +207,7 @@ int main()
 
 Driver for common-cathode and common-anode 7-segment displays.
 
-### SSD Configuration Structure
+### 📌 SSD Configuration Structure
 
 ```c
 typedef struct {
@@ -249,14 +216,14 @@ typedef struct {
 } SSD_Type;
 ```
 
-### API
+### 📌 API
 
 | Function | Description |
 |----------|-------------|
 | `SSD_InitialDataPort(SSD_Type ssd)` | Initialize the data port as output. |
 | `SSD_SendNumber(SSD_Type ssd, u8 number)` | Display a digit (0–9) on the 7-segment. |
 
-### Example
+### 💻 Example
 
 ```c
 #include "HAL/SSD/SSD_Interface.h"
@@ -291,9 +258,29 @@ int main()
 
 ---
 
+## 🎬 Simulation Demos
+
+> 🎥 **Tip:** Record your Proteus simulations and convert them to GIFs for live demos!
+
+<div align="center">
+
+### 💡 LED Blinking Demo
+<img src="Hardware_Connection/LED_Simulation.PNG" width="500" alt="LED Simulation"/>
+
+*Replace with `LED_Demo.gif` for animated playback*
+
+### 7️⃣ Seven-Segment Counting Demo
+<img src="Hardware_Connection/7_Segment_Simulation.PNG" width="500" alt="7-Segment Simulation"/>
+
+*Replace with `7Segment_Demo.gif` for animated playback*
+
+</div>
+
+---
+
 ## 🛠️ Toolchain & Setup
 
-### Prerequisites
+### 📌 Prerequisites
 
 | Tool | Purpose |
 |------|---------|
@@ -303,11 +290,15 @@ int main()
 | **avrdude** | Flashing tool (USBasp, AVRISP mkII, Arduino as ISP) |
 | **Proteus VSM / SimulIDE** | Circuit simulation & debugging |
 
-### Build & Flash (Command Line)
+### 💻 Build & Flash (Command Line)
 
 ```bash
 # Compile
-avr-gcc -mmcu=atmega32 -DF_CPU=8000000UL -O2 -o main.elf APP/main.c MCAL/DIO/DIO_Program.c HAL/LED/LED_Program.c HAL/SSD/SSD_Program.c
+avr-gcc -mmcu=atmega32 -DF_CPU=8000000UL -O2 \
+    -o main.elf APP/main.c \
+    MCAL/DIO/DIO_Program.c \
+    HAL/LED/LED_Program.c \
+    HAL/SSD/SSD_Program.c
 
 # Generate HEX
 avr-objcopy -O ihex main.elf main.hex
@@ -318,12 +309,21 @@ avrdude -c usbasp -p m32 -U flash:w:main.hex:i
 
 ---
 
-## 🖼️ Hardware Connection / Simulation
+## 🚀 Quick Start
 
-| Simulation | Description |
-|------------|-------------|
-| ![LED Simulation](Hardware_Connection/LED_Simulation.PNG) | LED blinking circuit on Proteus |
-| ![7-Segment Simulation](Hardware_Connection/7_Segment_Simulation.PNG) | 7-Segment display counting circuit |
+```bash
+# 1. Clone the repository
+git clone https://github.com/ZIAD-ELMEKAWY/AVR_Atmega32_ITI.git
+
+# 2. Open in your preferred IDE
+#    (Microchip Studio / VS Code / Eclipse)
+
+# 3. Include the required headers in your main.c
+#include "MCAL/DIO/DIO_Interface.h"
+#include "HAL/LED/LED_Interface.h"
+
+# 4. Build & Flash to your ATmega32
+```
 
 ---
 
@@ -333,6 +333,8 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 
 ---
 
+<div align="center">
+
 ## 👤 Author
 
 **[Ziad Elmekawy](https://github.com/ZIAD-ELMEKAWY)**  
@@ -340,4 +342,6 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 
 ---
 
-> ⭐ If you find this project helpful, please consider giving it a star!
+⭐ If you find this project helpful, please consider giving it a star!
+
+</div>
