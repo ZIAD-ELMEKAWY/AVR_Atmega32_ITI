@@ -113,3 +113,29 @@ void LCD_Send_Falling_Edge		(void )
 	DIO_enumSetPinValue(LCD_CONTROL_PORT , LCD_EN , DIO_PIN_LOW);
 	_delay_ms(1);
 }
+
+void LCD_Set_Position ( u8 Copy_u8Row , u8 Copy_u8Col ){
+
+	u8 LOC_u8data ;
+
+	/* In These cases will set at (0,0) ==> if the user enter invalid location */
+	if(Copy_u8Row>2||Copy_u8Row<1||Copy_u8Col>16||Copy_u8Col<1)  //check
+	{
+		LOC_u8data = lcd_SetCursor ;   // first location
+	}
+
+	else if( Copy_u8Row == CLCD_ROW_1 ){
+
+		LOC_u8data = ( ( lcd_SetCursor ) + ( Copy_u8Col - 1 ) );              //Row1 -> 0x80+col-1
+
+	}
+
+	else if( Copy_u8Row == CLCD_ROW_2 ){
+
+		LOC_u8data = ( ( lcd_SetCursor ) + (64) + ( Copy_u8Col - 1 ) );       //Row2 -> 0xc0+col-1
+
+	}
+	LCD_Send_Command ( LOC_u8data );
+	_delay_ms(1);
+
+}
