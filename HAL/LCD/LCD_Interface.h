@@ -56,7 +56,8 @@ void LCD_Send_String	(u8 *string);
 void LCD_Send_Number	(u8 Number);
 
 
-
+void LCD_Set_Position 			( u8 Copy_u8Row , u8 Copy_u8Col );
 void LCD_Clear_Screen			(void);
 void LCD_Send_Falling_Edge		(void );
+
 #endif /* HAL_LCD_LCD_INTERFACE_H_ */
