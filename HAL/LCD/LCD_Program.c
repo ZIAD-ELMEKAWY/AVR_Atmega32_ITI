@@ -67,12 +67,38 @@ void LCD_Send_Command	(u8 command)
 
 void LCD_Send_String	(u8 *string)
 {
+	u8 LOC_u8Iterator = 0 ;
 
+	while( string[LOC_u8Iterator] != '\0' ){
+
+		LCD_Send_Data( string[LOC_u8Iterator] );
+		LOC_u8Iterator++ ;
+
+	}
 }
 
 void LCD_Send_Number	(u8 Number)
 {
+	u64 LOC_u64Reversed = 1 ;
 
+	if( Number == 0 ){ LCD_Send_Data('0'); }
+
+	else{
+
+		while( Number != 0 ){
+
+			LOC_u64Reversed = ( LOC_u64Reversed * 10 ) + ( Number % 10 );
+			Number /= 10 ;
+
+		}
+		while( LOC_u64Reversed != 1 ){
+
+			LCD_Send_Data( ( LOC_u64Reversed % 10 ) + 48 );
+			LOC_u64Reversed /= 10 ;
+
+		}
+
+	}
 }
 
 void LCD_Clear_Screen	(void)
