@@ -113,7 +113,6 @@ void LCD_Send_Falling_Edge		(void )
 	DIO_enumSetPinValue(LCD_CONTROL_PORT , LCD_EN , DIO_PIN_LOW);
 	_delay_ms(1);
 }
-
 void LCD_Set_Position ( u8 Copy_u8Row , u8 Copy_u8Col ){
 
 	u8 LOC_u8data ;
@@ -138,4 +137,58 @@ void LCD_Set_Position ( u8 Copy_u8Row , u8 Copy_u8Col ){
 	LCD_Send_Command ( LOC_u8data );
 	_delay_ms(1);
 
+}
+
+void LCD_Shift_Display(u8 Copy_u8Direction, u8 Copy_u8Steps, u16 Copy_u16Delay_ms)
+{
+    u8 LOC_u8Command;
+    u8 LOC_u8Iterator;
+
+    /* Choose command based on direction */
+    if(Copy_u8Direction == LCD_SHIFT_RIGHT)
+    {
+        LOC_u8Command = lcd_ShiftDisplayRight;
+    }
+    else
+    {
+        LOC_u8Command = lcd_ShiftDisplayLeft;
+    }
+
+    /* Send command for each step with delay */
+    for(LOC_u8Iterator = 0; LOC_u8Iterator < Copy_u8Steps; LOC_u8Iterator++)
+    {
+        LCD_Send_Command(LOC_u8Command);
+        _delay_ms(Copy_u16Delay_ms);
+    }
+}
+
+void LCD_Shift_String(u8 *Copy_u8String, u8 Copy_u8Row, u8 Copy_u8Direction, u8 Copy_u8Steps, u16 Copy_u16Delay_ms)
+{
+    u8 LOC_u8Iterator;
+    u8 LOC_u8StartCol;
+
+    if(Copy_u8Direction == LCD_SHIFT_LEFT)
+    {
+        /* Start from rightmost possible position and go left */
+        for(LOC_u8Iterator = 0; LOC_u8Iterator < Copy_u8Steps; LOC_u8Iterator++)
+        {
+            LCD_Clear_Screen();
+            LOC_u8StartCol = 16 - LOC_u8Iterator;  // Move left
+            LCD_Set_Position(Copy_u8Row, LOC_u8StartCol);
+            LCD_Send_String(Copy_u8String);
+            _delay_ms(Copy_u16Delay_ms);
+        }
+    }
+    else if(Copy_u8Direction == LCD_SHIFT_RIGHT)
+    {
+        /* Start from leftmost position and go right */
+        for(LOC_u8Iterator = 0; LOC_u8Iterator < Copy_u8Steps; LOC_u8Iterator++)
+        {
+            LCD_Clear_Screen();
+            LOC_u8StartCol = 1 + LOC_u8Iterator;   // Move right
+            LCD_Set_Position(Copy_u8Row, LOC_u8StartCol);
+            LCD_Send_String(Copy_u8String);
+            _delay_ms(Copy_u16Delay_ms);
+        }
+    }
 }
