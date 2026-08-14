@@ -22,7 +22,9 @@
 #define lcd_CGRAM                     0x40          // the first Place/Address at CGRAM
 #define lcd_SetCursor                 0x80          // set cursor position
 #define lcd_FunctionReset             0x30          // reset the LCD
-
+/*========== Display Shift Commands (HD44780) ==========*/
+#define lcd_ShiftDisplayLeft   0x18   // Shift entire display left
+#define lcd_ShiftDisplayRight  0x1C   // Shift entire display right
 
 /***************************************************************************************/
 #define CLCD_ROW_1   1
@@ -47,14 +49,18 @@
 
 /***************************************************************************************/
 
-
+/*========== Shift Directions ==========*/
+#define LCD_SHIFT_LEFT   0
+#define LCD_SHIFT_RIGHT  1
 
 void LCD_Init			(void);
 void LCD_Send_Data		(u8 data);
 void LCD_Send_Command	(u8 command);
 void LCD_Send_String	(u8 *string);
 void LCD_Send_Number	(u8 Number);
-
+/*========== Shift Function Prototypes ==========*/
+void LCD_Shift_Display(u8 Copy_u8Direction, u8 Copy_u8Steps, u16 Copy_u16Delay_ms);
+void LCD_Shift_String(u8 *Copy_u8String, u8 Copy_u8Row, u8 Copy_u8Direction, u8 Copy_u8Steps, u16 Copy_u16Delay_ms);
 
 void LCD_Set_Position 			( u8 Copy_u8Row , u8 Copy_u8Col );
 void LCD_Clear_Screen			(void);
