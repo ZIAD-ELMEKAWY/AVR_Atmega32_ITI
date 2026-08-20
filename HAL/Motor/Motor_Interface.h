@@ -10,18 +10,16 @@
 
 #include "../../MCAL/DIO/DIO_Interface.h"
 
-	#define DCMOTOR_CW		0
-	#define DCMOTOR_CCW		1
-	#define DCMOTOR_STOP	2
+/* <<<<<<<<<<<<<<<<<<<<<<< Data Types   >>>>>>>>>>>>>>>>>>>>>>>>>>>  */
+typedef struct
+{
+	u8 Port ;
+	u8 Pin;
+}motor_t;
+/* <<<<<<<<<<<<<<<<< User Interface Declaration >>>>>>>>>>>>>>> */
+void DC_Motor_init 	(motor_t motor);
+void DC_Motor_ON 	(motor_t motor);
+void DC_Motor_OFF 	(motor_t motor);
 
-	typedef struct
-	{
-		u8 Copy_uint8DcMotorPort ;
-		u8 Copy_uint8DcMotorPinA ;
-		u8 Copy_uint8DcMotorPinB ;
-	} DCMOTOR_CONFIG ;
-
-	void DCMOTOR_uint8Control (DCMOTOR_CONFIG * DcMotor , u8 Copy_uint8State) ;
 
 #endif /* HAL_MOTOR_MOTOR_INTERFACE_H_ */
-
