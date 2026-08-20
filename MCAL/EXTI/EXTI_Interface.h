@@ -17,8 +17,18 @@
 #define EXTI_LINE1	7
 #define EXTI_LINE2	5
 
+typedef enum
+{
+	EXTI_LOW_LEVEL,
+	EXTI_ANY_LOGICAL_CHANGE,
+	EXTI_FALLING_EDGE,
+	EXTI_RISING_EDGE
+
+} EXTI_SenseControl_t;
 
 
+void EXTI_Init(u8 exti_line, EXTI_SenseControl_t sense_control);
+void EXTI_Signal_Latch(u8 exti_line, void (*Copy_pvSignalFunc)(void));
 
 // Function Declaration
 void EXTI_Enable	(u8 exti_line);
